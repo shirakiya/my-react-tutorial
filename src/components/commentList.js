@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import Comment from './comment';
 
 
-const CommentList = React.createClass({
-  render: function() {
-    const commentNodes = this.props.data.map(function(comment) {
+class CommentList extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const commentNodes = this.props.data.map((comment) => {
       return (
-        <Comment author={comment.author} key={comment.id}>
-          {comment.text}
-        </Comment>
+        <Comment author={comment.author} key={comment.id}>{comment.text}</Comment>
       );
     });
 
@@ -18,7 +20,10 @@ const CommentList = React.createClass({
       </div>
     );
   }
-});
+}
 
+CommentList.propsTypes = {
+  data: PropTypes.array,
+};
 
-module.exports = CommentList;
+export default CommentList;

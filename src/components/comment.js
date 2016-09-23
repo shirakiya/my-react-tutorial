@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import Remarkable from 'remarkable';
 
 
-const Comment = React.createClass({
-  rawMarkup: function() {
+class Comment extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  rawMarkup() {
     const md = new Remarkable();
     const rawMarkup = md.render(this.props.children.toString());
     return { __html: rawMarkup };
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <div className="comment">
         <h3 className="commentAuthor">
@@ -19,7 +23,11 @@ const Comment = React.createClass({
       </div>
     );
   }
-});
+}
 
+Comment.propTypes = {
+  author: PropTypes.string.isRequired,
+  children: PropTypes.string.isRequired,
+};
 
-module.exports = Comment;
+export default Comment;

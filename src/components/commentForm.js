@@ -1,56 +1,56 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 
 
-const CommentForm = React.createClass({
-  getInitialState: function() {
-    return {
-      author: '',
-      text: '',
-    }
-  },
+class CommentForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { author: '', text: '' };
+  }
 
-  handleAuthorChange: function(e) {
-    this.setState({author: e.target.value});
-  },
+  handleAuthorChange(e) {
+    this.setState({ author: e.target.value });
+  }
 
-  handleTextChange: function(e) {
-    this.setState({text: e.target.value});
-  },
+  handleTextChange(e) {
+    this.setState({ text: e.target.value });
+  }
 
-  handleSubmit: function(e) {
+  handleSubmit(e) {
     e.preventDefault();
-
     const author = this.state.author.trim();
     const text = this.state.text.trim();
     if (!text || !author) {
       return;
     }
-    this.props.onCommentSubmit({author: author, text: text});
-    this.setState({author: '', text: ''});
-  },
+    this.props.onCommentSubmit({ author: author, text: text });
+    this.setState({ author: '', text: '' });
+  }
 
-  render: function() {
+  render() {
     return (
-      <form className="commentForm" onSubmit={this.handleSubmit} >
+      <form className="commentForm" onSubmit={this.handleSubmit.bind(this)} >
         <fieldset>
           <input
             type="text"
             placeholder="Your name"
             value={this.state.author}
-            onChange={this.handleAuthorChange}
+            onChange={this.handleAuthorChange.bind(this)}
           />
           <input
             type="text"
             placeholder="Say something..."
             value={this.state.text}
-            onChange={this.handleTextChange}
+            onChange={this.handleTextChange.bind(this)}
           />
           <input type="submit" value="Post" />
         </fieldset>
       </form>
     );
   }
-});
+}
 
+CommentForm.PropTypes = {
+  onCommentSubmit: PropTypes.func.isRequired,
+}
 
-module.exports = CommentForm;
+export default CommentForm;

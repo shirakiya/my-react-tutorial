@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import $ from 'jquery';
 import CommentList from './commentList';
 import CommentForm from './commentForm';
 
 
-const CommentBox = React.createClass({
-  loadCommentsFromServer: function() {
+class CommentBox extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { data: [] };
+  }
+
+  loadCommentsFromServer() {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
@@ -18,24 +23,18 @@ const CommentBox = React.createClass({
         console.error(this.props.url, status, err.toString());
       }.bind(this),
     });
-  },
+  }
 
-  getInitialState: function() {
-    return {
-      data: [],
-    };
-  },
-
-  componentDidMount: function() {
+  componentDidMount() {
     this.loadCommentsFromServer();
-    setInterval(this.loadCommentsFromServer, this.props.pollInterval);
-  },
+    setInterval(this.loadCommentsFromServer(), this.props.pollInterval);
+  }
 
-  handleCommentSubmit: function(comment) {
-    const comments = this.state.data;
+  handleCommentSubmit(comment) {
     comment.id = Date.now();
+    const comments = this.state.data;
     const newComments = comments.concat([comment]);
-    this.setState({data: newComments});
+    this.setState({ data: newComments });
 
     $.ajax({
       url: this.props.url,
@@ -48,20 +47,24 @@ const CommentBox = React.createClass({
       error: function(xhr, status, err) {
         this.setState({data: comments});
         console.error(this.props.url, status, err.toString());
-      }.bind(this)
+      }.bind(this),
     });
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <div className="commentBox">
         <h1>Comments</h1>
         <CommentList data={this.state.data} />
-        <CommentForm onCommentSubmit={this.handleCommentSubmit}/>
+        <CommentForm onCommentSubmit={this.handleCommentSubmit.bind(this)}/>
       </div>
     );
   }
-});
+}
 
+CommentBox.propTypes = {
+  url: PropTypes.string.isRequired,
+  pollInterval: PropTypes.number.isRequired,
+};
 
-module.exports = CommentBox;
+export default CommentBox;
