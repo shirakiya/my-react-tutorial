@@ -1,22 +1,12 @@
 [
     {
-        "text": "Hey there!",
         "author": "Pete Hunt",
-        "id": 1388534400000
+        "id": 1388534400000,
+        "text": "Hey there!"
     },
     {
-        "text": "React is *great*!",
         "author": "Paul O’Shannessy",
-        "id": 1420070400000
-    },
-    {
-        "text": "hoge~",
-        "author": "yoshihiko",
-        "id": 1474619426239
-    },
-    {
-        "text": "ふが",
-        "author": "ほげ",
-        "id": 1474619457005
+        "id": 1420070400000,
+        "text": "React is *great*!"
     }
 ]
