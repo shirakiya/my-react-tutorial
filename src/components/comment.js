@@ -8,12 +8,14 @@ class Comment extends Component {
   }
 
   rawMarkup() {
+    const { children } = this.props;
     const md = new Remarkable();
     const rawMarkup = md.render(this.props.children.toString());
     return { __html: rawMarkup };
   }
 
   render() {
+    const { author } = this.props;
     return (
       <div className="comment">
         <h3 className="commentAuthor">

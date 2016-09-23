@@ -4,42 +4,43 @@ import React, { Component, PropTypes } from 'react';
 class CommentForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { author: '', text: '' };
   }
 
   handleAuthorChange(e) {
-    this.setState({ author: e.target.value });
+    const { inputAuthor } = this.props;
+    inputAuthor(e.target.value);
   }
 
   handleTextChange(e) {
-    this.setState({ text: e.target.value });
+    const { inputText } = this.props;
+    inputText(e.target.value);
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    const author = this.state.author.trim();
-    const text = this.state.text.trim();
-    if (!text || !author) {
+
+    const { author, text, onCommentSubmit } = this.props;
+    if (!author || !text) {
       return;
     }
-    this.props.onCommentSubmit({ author: author, text: text });
-    this.setState({ author: '', text: '' });
+    onCommentSubmit({ author: author, text: text });
   }
 
   render() {
+    const { author, text } = this.props;
     return (
       <form className="commentForm" onSubmit={this.handleSubmit.bind(this)} >
         <fieldset>
           <input
             type="text"
             placeholder="Your name"
-            value={this.state.author}
+            value={author}
             onChange={this.handleAuthorChange.bind(this)}
           />
           <input
             type="text"
             placeholder="Say something..."
-            value={this.state.text}
+            value={text}
             onChange={this.handleTextChange.bind(this)}
           />
           <input type="submit" value="Post" />
@@ -51,6 +52,10 @@ class CommentForm extends Component {
 
 CommentForm.PropTypes = {
   onCommentSubmit: PropTypes.func.isRequired,
+  author: PropTypes.string.isRequired,
+  inputAuthor: PropTypes.func.isRequired,
+  text: PropTypes.string.isRequired,
+  inputText: PropTypes.func.isRequired,
 }
 
 export default CommentForm;

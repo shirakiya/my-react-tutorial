@@ -23,7 +23,7 @@ class CommentList extends Component {
 }
 
 CommentList.propsTypes = {
-  data: PropTypes.array,
+  data: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default CommentList;

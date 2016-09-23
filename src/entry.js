@@ -1,9 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CommentBox from './components/commentBox';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import configureStore from './configureStore';
+import CommentBoxContainer from './containers/commentBoxContainer';
 
+const store = configureStore();
 
 ReactDOM.render(
-  <CommentBox url='/api/comments' pollInterval={2000} />,
+  <Provider store={store}>
+    <CommentBoxContainer />
+  </Provider>,
   document.getElementById('content')
 );
