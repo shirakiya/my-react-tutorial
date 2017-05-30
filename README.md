@@ -1,6 +1,6 @@
-# my-react-tutorial
-practice React.js for my study. Refering to https://facebook.github.io/react/docs/tutorial.html
-
+# practice-react
+My practice about React.js.
+Refering to https://facebook.github.io/react/tutorial/tutorial.html
 
 # setup
 ```
